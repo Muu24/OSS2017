@@ -1,0 +1,17 @@
+---
+title: "OSS_draft"
+output:
+  html_document: default
+  pdf_document: default
+---
+Read the data
+```{r}
+library(gdata)
+df_ag = read.xls ("Actigraphy Data.xlsx",header=TRUE)
+#head(df_ag)
+df_sleeplog1 = read.xls ("Sleep Logs Data (Rested, sleep quality, latency, highness, tolerance).xlsx",header=TRUE)
+#head(df_sleeplog1)
+df_sleeplog2 = read.xls ("Sleep Logs Data (Sleep Duration).xlsx",header=TRUE)
+#head(df_sleeplog2)
+```
+This 
