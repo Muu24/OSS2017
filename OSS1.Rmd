@@ -5,7 +5,35 @@ output:
     latex_engine: xelatex
   html_document: default
 ---
-Demographics
+Demographics for Complete Cases
+
+    -----------------------------------------------
+                  Demographics
+                     Male     Female      Total
+    -------------  -------- ----------- -----------  
+    Number            13        27          40                          
+    
+    Strain1=1         4         15          19
+    
+    Strain1=2         9         12          21
+    -------------  -------- ----------- ----------- 
+    Strain2=3         3         10          13
+    
+    Strain2=4         4         6           10
+      
+    Strain2=5         6         11          17
+    -------------  -------- ----------- ----------- 
+    Strain3=6         2         8           10
+    
+    Strain3=7         4         6           10
+    
+    Strain3=8         3         6           9
+  
+    Strain3=9         4         7           11
+    -----------------------------------------------
+    
+There are total 40 individuals complete the whole design (67.5\% women with mean age 53.82679, standard deviation 13.20323, 32.5\% men with mean 45.72919 and standard deviation 14.98331) 
+    
 ```{r message=FALSE}
 library(gdata)
 df_ag = read.xls ("Actigraphy Data.xlsx",header=TRUE)
@@ -26,7 +54,7 @@ cgender<-as.factor(df_ag$gender_m)
 cage<-df_ag$Age
 cdat<-data_frame(cISI_B,cgender,cage)
 cdat<-cdat[complete.cases(cdat),]
-cdat[,'cage']<-cut(cdat$cage,seq(20,80,length.out=10))
+cdat[,'cage']<-cut(cdat$cage,seq(20,80,length.out=4))
 ggplot(cdat,aes(cage,cISI_B,fill=cgender))+geom_boxplot()+geom_point(alpha=0.3)
 ```
     
