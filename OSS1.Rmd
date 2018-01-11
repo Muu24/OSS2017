@@ -1,11 +1,12 @@
 ---
 title: "OSS_draft"
 output:
+  pdf_document: 
+    latex_engine: xelatex
   html_document: default
-  pdf_document: default
 ---
-Read the data
-```{r}
+Demographics
+```{r include=FALSE, cache=FALSE}
 library(gdata)
 df_ag = read.xls ("Actigraphy Data.xlsx",header=TRUE)
 #head(df_ag)
@@ -14,4 +15,18 @@ df_sleeplog1 = read.xls ("Sleep Logs Data (Rested, sleep quality, latency, highn
 df_sleeplog2 = read.xls ("Sleep Logs Data (Sleep Duration).xlsx",header=TRUE)
 #head(df_sleeplog2)
 ```
-This 
+The general scope of the data:
+```{r include=FALSE, cache=FALSE}
+library(ggplot2)
+library(tidyverse)
+```
+```{r}
+cISI_B<-df_ag$ISI_B
+cgender<-as.factor(df_ag$gender_m)
+cage<-df_ag$Age
+cdat<-data_frame(cISI_B,cgender,cage)
+cdat<-cdat[complete.cases(cdat),]
+cdat[,'cage']<-cut(cdat$cage,seq(20,80,length.out=10))
+ggplot(cdat,aes(cage,cISI_B,fill=cgender))+geom_boxplot()+geom_point(alpha=0.3)
+```
+    
