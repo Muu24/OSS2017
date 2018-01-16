@@ -95,17 +95,41 @@ df_ISI[,'strain_2']<-as.factor(df_ISI[,'strain_2'])
 df_ISI[,'strain_3']<-as.factor(df_ISI[,'strain_3'])
 cISI<-as_data_frame(df_ISI[,1:11],cage,cgender)
 cISI<-cISI[complete.cases(cISI),]
+colnames(cISI)<-c('ID','St1','St2','St3','ISI_B','ISI_w1','ISI_w2','ISI_w3','ISI_w4','ISI_w5','ISI_w6')
 ###Divide into different strains
 #strain 1
-cISI1_1<-cISI[cISI[,'strain_1']==1,]
-cISI1_2<-cISI[cISI[,'strain_1']==2,]
+cISI1_1<-cISI[cISI[,'St1']==1,]
+cISI1_2<-cISI[cISI[,'St1']==2,]
 #Confidence interval and paired t test 
 #Among strain dose by comparing escalated, (old weeks 1,3,5)
-t.test(cISI1_1$ISI_B,cISI1_1$ISI_Wk1.,paired=TRUE)
-t.test(cISI1_1$ISI_Wk1.,cISI1_1$ISI_Wk3.,paired=TRUE)
-t.test(cISI1_1$ISI_Wk3.,cISI1_1$ISI_Wk5,paired=TRUE)
-t.test(cISI1_1$ISI_Wk1.,cISI1_1$ISI_Wk5,paired=TRUE)
+st11_ISI_b1<-t.test(cISI1_1$ISI_B,cISI1_1$ISI_w1,paired=TRUE)
+st11_ISI_b3<-t.test(cISI1_1$ISI_B,cISI1_1$ISI_w3,paired=TRUE)
+st11_ISI_b5<-t.test(cISI1_1$ISI_B,cISI1_1$ISI_w5,paired=TRUE)
+st11_ISI_13<-t.test(cISI1_1$ISI_w1,cISI1_1$ISI_w3,paired=TRUE)
+st11_ISI_35<-t.test(cISI1_1$ISI_w3,cISI1_1$ISI_w5,paired=TRUE)
+st11_ISI_15<-t.test(cISI1_1$ISI_w1,cISI1_1$ISI_w5,paired=TRUE)
+st12_ISI_b1<-t.test(cISI1_2$ISI_B,cISI1_2$ISI_w1,paired=TRUE)
+st12_ISI_b3<-t.test(cISI1_2$ISI_B,cISI1_2$ISI_w3,paired=TRUE)
+st12_ISI_b5<-t.test(cISI1_2$ISI_B,cISI1_2$ISI_w5,paired=TRUE)
+st12_ISI_13<-t.test(cISI1_2$ISI_w1,cISI1_2$ISI_w3,paired=TRUE)
+st12_ISI_35<-t.test(cISI1_2$ISI_w3,cISI1_2$ISI_w5,paired=TRUE)
+st12_ISI_15<-t.test(cISI1_2$ISI_w1,cISI1_2$ISI_w5,paired=TRUE)
+a<-c(st11_ISI_b1$estimate,st11_ISI_b3$estimate,st11_ISI_b5$estimate,
+st11_ISI_13$estimate,st11_ISI_35$estimate,st11_ISI_15$estimate,
+st11_ISI_b1$estimate,st12_ISI_b3$estimate,st12_ISI_b5$estimate,
+st12_ISI_13$estimate,st12_ISI_35$estimate,st12_ISI_15$estimate)
+b<-rbind(st11_ISI_b1$conf.int,st11_ISI_b3$conf.int,st11_ISI_b5$conf.int,
+     st11_ISI_13$conf.int,st11_ISI_35$conf.int,st11_ISI_15$conf.int,
+     st11_ISI_b1$conf.int,st12_ISI_b3$conf.int,st12_ISI_b5$conf.int,
+     st12_ISI_13$conf.int,st12_ISI_35$conf.int,st12_ISI_15$conf.int)
+st1_ISI<-cbind(a,b)
+colnames(st1_ISI)<-c('Mean Difference','Lower Bound','Upper Bound')
+rownames(st1_ISI)<-c('St11_ISI_b1','St11_ISI_b3','St11_ISI_b5','St11_ISI_13','St11_ISI_15','St11_ISI_35',
+                     'St12_ISI_b1','St12_ISI_b3','St12_ISI_b5','St12_ISI_13','St12_ISI_15','St12_ISI_35')
 #Confidence interval and paired t test 
 #Among Maintenance dose by comparing escalated, (even weeks 2,4,6)
-
+t.test(cISI1_1$ISI_B,cISI1_1$ISI_w1,paired=TRUE)
+t.test(cISI1_1$ISI_w1,cISI1_1$ISI_w3,paired=TRUE)
+t.test(cISI1_1$ISI_w3,cISI1_1$ISI_w5,paired=TRUE)
+t.test(cISI1_1$ISI_w1,cISI1_1$ISI_w5,paired=TRUE)
 

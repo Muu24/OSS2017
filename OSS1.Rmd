@@ -34,6 +34,8 @@ Demographics for Complete Cases
     
 There are total 40 individuals complete the whole design (67.5\% women with mean age 53.82679, standard deviation 13.20323, 32.5\% men with mean 45.72919 and standard deviation 14.98331) 
     
+
+For the Insomnia Severity Index:    
 ```{r message=FALSE}
 library(gdata)
 df_ag = read.xls ("Actigraphy Data.xlsx",header=TRUE)
